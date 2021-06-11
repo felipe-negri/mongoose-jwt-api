@@ -4,11 +4,9 @@ const express = require('express');
 
 require('dotenv').config();
 
-const { verificaAcesso } = require('./utils/jwt');
 const { validaJson } = require('./utils/validacao');
 
-const usuarios = require('./routes/usuarioRoutes');
-const clientes = require('./routes/clienteRoutes');
+const routes = require('./routes');
 
 const app = express();
 
@@ -16,8 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(validaJson);
 
-app.use('/usuario', usuarios);
-app.use('/cliente', verificaAcesso, clientes);
+app.use(routes);
 
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
